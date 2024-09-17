@@ -1,0 +1,13 @@
+-- 코드를 입력하세요
+SELECT
+    I.ANIMAL_ID,
+    I.NAME
+FROM
+    ANIMAL_INS AS I
+JOIN
+    ANIMAL_OUTS AS O
+    ON I.ANIMAL_ID = O.ANIMAL_ID
+WHERE
+    I.DATETIME > O.DATETIME  -- 보호 시작일보다 입양일이 더 빠른 동물 필터링
+ORDER BY
+    I.DATETIME;
