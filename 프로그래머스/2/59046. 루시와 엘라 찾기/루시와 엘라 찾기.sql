@@ -6,4 +6,4 @@ SELECT
 FROM
     ANIMAL_INS
 WHERE
-    NAME IN ('Lucy', 'Ella', 'Pickle', 'Rogan', 'Sabrina', 'Mitty')
+    NAME IN ('Lucy', 'Ella', 'Pickle', 'Rogan', 'Sabrina', 'Mitty');
