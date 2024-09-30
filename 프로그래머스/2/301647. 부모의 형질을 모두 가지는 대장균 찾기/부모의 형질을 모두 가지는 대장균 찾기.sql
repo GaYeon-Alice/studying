@@ -1,0 +1,15 @@
+-- 코드를 작성해주세요
+SELECT
+    C.ID
+    , C.GENOTYPE
+    , P.GENOTYPE AS PARENT_GENOTYPE
+FROM
+    ECOLI_DATA AS C
+LEFT JOIN
+    ECOLI_DATA AS P
+ON
+    C.PARENT_ID = P.ID
+WHERE
+    C.GENOTYPE & P.GENOTYPE = P.GENOTYPE  -- 부모의 형질을 모두 보유한 대장균 조회
+ORDER BY
+    C.ID;
