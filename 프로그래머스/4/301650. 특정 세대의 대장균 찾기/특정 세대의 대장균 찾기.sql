@@ -1,0 +1,18 @@
+-- 코드를 작성해주세요
+SELECT
+    C2.ID
+FROM
+    ECOLI_DATA AS P
+LEFT JOIN
+    ECOLI_DATA AS C1
+ON
+    P.ID = C1.PARENT_ID
+LEFT JOIN
+    ECOLI_DATA AS C2
+ON
+    C1.ID = C2.PARENT_ID
+WHERE
+    P.PARENT_ID IS NULL  -- 1세대 대장균
+    AND C2.ID IS NOT NULL  -- 3세대 대장균
+ORDER BY
+    C2.ID;
