@@ -7,6 +7,7 @@ FROM
     ITEM_INFO
 WHERE
     ITEM_ID IN (
+        -- 업그레이드가 불가능한 아이템 선택
         SELECT
             C.ITEM_ID
         FROM
