@@ -7,7 +7,7 @@ WITH FrontEnd AS (
     WHERE
         CATEGORY = 'Front End'
 )
-SELECT
+SELECT DISTINCT
     D.ID
     , D.EMAIL
     , D.FIRST_NAME
@@ -18,11 +18,5 @@ JOIN
     FrontEnd AS FE
 ON
     D.SKILL_CODE & FE.CODE
-GROUP BY
-    D.ID
-    , D.EMAIL
-    , D.FIRST_NAME
-    , D.LAST_NAME
 ORDER BY
     D.ID;
-    
