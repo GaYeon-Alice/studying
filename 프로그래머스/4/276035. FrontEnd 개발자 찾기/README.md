@@ -1,6 +1,6 @@
 # [level 4] FrontEnd 개발자 찾기 - 276035 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/276035#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/276035) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 10월 11일 19:49:45
+2024년 12월 14일 23:22:26
 
 ### 문제 설명
 
