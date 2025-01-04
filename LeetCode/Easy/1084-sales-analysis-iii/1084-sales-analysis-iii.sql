@@ -1,3 +1,4 @@
+# Write your MySQL query statement below
 SELECT p.product_id
      , p.product_name
 FROM Product AS p
