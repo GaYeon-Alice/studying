@@ -1,10 +1,6 @@
 -- 코드를 입력하세요
-SELECT
-    (PRICE - PRICE % 10000) AS PRICE_GROUP
-    , COUNT(*) AS PRODUCTS
-FROM
-    PRODUCT
-GROUP BY
-    PRICE_GROUP
-ORDER BY
-    PRICE_GROUP;
+SELECT (price - price % 10000) AS price_group
+     , COUNT(*) AS products
+FROM product
+GROUP BY price_group
+ORDER BY price_group;
