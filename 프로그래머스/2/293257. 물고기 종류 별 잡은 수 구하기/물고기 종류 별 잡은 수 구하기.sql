@@ -1,14 +1,7 @@
 -- 코드를 작성해주세요
-SELECT
-    COUNT(*) AS FISH_COUNT
-    , FNI.FISH_NAME
-FROM
-    FISH_INFO AS FI
-JOIN
-    FISH_NAME_INFO AS FNI
-ON
-    FI.FISH_TYPE = FNI.FISH_TYPE
-GROUP BY
-    FNI.FISH_NAME
-ORDER BY
-    FISH_COUNT DESC;
+SELECT COUNT(*) AS fish_count
+     , fni.fish_name
+FROM fish_name_info AS fni
+JOIN fish_info AS fi ON fni.fish_type = fi.fish_type
+GROUP BY fni.fish_name
+ORDER BY fish_count DESC;
