@@ -1,15 +1,7 @@
 -- 코드를 작성해주세요
-SELECT
-    I.ITEM_ID
-    , I.ITEM_NAME
-FROM
-    ITEM_INFO AS I
-JOIN
-    ITEM_TREE AS T
-ON
-    I.ITEM_ID = T.ITEM_ID
-WHERE
-    T.PARENT_ITEM_ID IS NULL
-ORDER BY
-    I.ITEM_ID;
-    
+SELECT i.item_id
+     , i.item_name
+FROM item_info AS i
+JOIN item_tree AS t ON i.item_id = t.item_id
+WHERE t.parent_item_id IS NULL
+ORDER BY i.item_id;
