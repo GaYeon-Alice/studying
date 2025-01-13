@@ -1,18 +1,14 @@
 -- 코드를 입력하세요
-SELECT
-    U.USER_ID
-    , U.NICKNAME
-    , CONCAT(U.CITY, ' ', U.STREET_ADDRESS1, ' ', U.STREET_ADDRESS2) AS ADDRESS
-    , CONCAT(LEFT(U.TLNO, 3), '-', 
-           MID(U.TLNO, 4, 4), '-', 
-           RIGHT(U.TLNO, 4)) AS PHONE
-FROM
-    USED_GOODS_USER AS U
-JOIN
-    USED_GOODS_BOARD AS B ON U.USER_ID = B.WRITER_ID
-GROUP BY
-    U.USER_ID
-HAVING
-    COUNT(*) >= 3
-ORDER BY
-    U.USER_ID DESC;
+WITH ActiveUsers AS (
+    SELECT writer_id
+    FROM used_goods_board
+    GROUP BY writer_id
+    HAVING COUNT(*) >= 3
+)
+SELECT user_id
+     , nickname
+     , CONCAT(city, ' ', street_address1, ' ', street_address2) AS address
+     , CONCAT(LEFT(tlno, 3), '-', MID(tlno, 4, 4), '-', RIGHT(tlno, 4)) AS phone
+FROM used_goods_user
+WHERE user_id IN (SELECT writer_id FROM ActiveUsers)
+ORDER BY user_id DESC;
