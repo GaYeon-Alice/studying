@@ -5,10 +5,10 @@ WITH ActiveUsers AS (
     GROUP BY writer_id
     HAVING COUNT(*) >= 3
 )
-SELECT user_id
-     , nickname
-     , CONCAT(city, ' ', street_address1, ' ', street_address2) AS address
-     , CONCAT(LEFT(tlno, 3), '-', MID(tlno, 4, 4), '-', RIGHT(tlno, 4)) AS phone
-FROM used_goods_user
-WHERE user_id IN (SELECT writer_id FROM ActiveUsers)
-ORDER BY user_id DESC;
+SELECT u.user_id
+     , u.nickname
+     , CONCAT(u.city, ' ', u.street_address1, ' ', u.street_address2) AS address
+     , CONCAT(LEFT(u.tlno, 3), '-', MID(u.tlno, 4, 4), '-', RIGHT(u.tlno, 4)) AS phone
+FROM used_goods_user AS u
+JOIN ActiveUsers AS au ON u.user_id = au.writer_id
+ORDER BY u.user_id DESC;
