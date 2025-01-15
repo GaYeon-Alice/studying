@@ -1,7 +1,4 @@
 -- 코드를 작성해주세요
-SELECT
-    COUNT(*) AS FISH_COUNT
-FROM
-    FISH_INFO
-WHERE
-    YEAR(TIME) = '2021';
+SELECT COUNT(*) AS fish_count
+FROM fish_info
+WHERE YEAR(time) = 2021;
