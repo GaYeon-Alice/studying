@@ -1,9 +1,5 @@
 -- 코드를 작성해주세요
-SELECT
-    COUNT(*) AS FISH_COUNT
-FROM
-    FISH_INFO AS FI
-JOIN FISH_NAME_INFO AS FNI
-    ON FI.FISH_TYPE = FNI.FISH_TYPE
-WHERE
-    FISH_NAME IN ('BASS', 'SNAPPER')
+SELECT COUNT(*) AS fish_count
+FROM fish_info AS i
+JOIN fish_name_info AS n ON i.fish_type = n.fish_type
+WHERE n.fish_name IN ('BASS', 'SNAPPER');
