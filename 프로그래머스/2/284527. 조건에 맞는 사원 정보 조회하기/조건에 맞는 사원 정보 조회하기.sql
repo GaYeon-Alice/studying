@@ -1,24 +1,18 @@
 -- 코드를 작성해주세요
-WITH HR_SCORE AS (
-    SELECT
-        EMP_NO
-        , SUM(SCORE) AS SCORE
-    FROM
-        HR_GRADE
-    GROUP BY
-        EMP_NO
+WITH EmpScore AS (
+    SELECT emp_no
+         , SUM(score) AS total_score
+    FROM hr_grade
+    GROUP BY emp_no
 )
-SELECT
-    S.SCORE AS SCORE
-    , E.EMP_NO
-    , E.EMP_NAME
-    , E.POSITION
-    , E.EMAIL
-FROM
-    HR_EMPLOYEES AS E
-JOIN
-    HR_SCORE AS S
-ON
-    E.EMP_NO = S.EMP_NO
-WHERE
-    S.SCORE = (SELECT MAX(SCORE) FROM HR_SCORE)
+SELECT s.total_score AS score
+     , e.emp_no
+     , e.emp_name
+     , e.position
+     , e.email
+FROM hr_employees AS e
+JOIN EmpScore AS s ON e.emp_no = s.emp_no
+WHERE s.total_score = (
+    SELECT MAX(total_score)
+    FROM EmpScore
+);
