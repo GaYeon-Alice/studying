@@ -1,13 +1,8 @@
 -- 코드를 입력하세요
-SELECT
-    CAR_ID,
-    ROUND(AVG(DATEDIFF(END_DATE, START_DATE)) + 1, 1) AS AVERAGE_DURATION  -- 대여 시작일과 종료일이 같을 때 대여 기간이 1일이므로 + 1 필요
-FROM
-    CAR_RENTAL_COMPANY_RENTAL_HISTORY
-GROUP BY
-    CAR_ID
-HAVING
-    AVERAGE_DURATION >= 7
-ORDER BY
-    AVERAGE_DURATION DESC,
-    CAR_ID DESC;
+SELECT car_id
+     , ROUND(AVG(DATEDIFF(end_date, start_date) + 1), 1) AS average_duration
+FROM car_rental_company_rental_history
+GROUP BY car_id
+HAVING average_duration >= 7
+ORDER BY average_duration DESC
+       , car_id DESC;
