@@ -1,13 +1,13 @@
 -- 코드를 입력하세요
-SELECT B.AUTHOR_ID
-     , A.AUTHOR_NAME
-     , B.CATEGORY
-     , SUM(S.SALES * B.PRICE) AS TOTAL_SALES  -- 매출액: 판매량 * 판매가
-FROM BOOK AS B
-JOIN AUTHOR AS A ON B.AUTHOR_ID = A.AUTHOR_ID
-JOIN BOOK_SALES AS S ON B.BOOK_ID = S.BOOK_ID
-WHERE DATE_FORMAT(S.SALES_DATE, '%Y-%m') = '2022-01'
-GROUP BY B.AUTHOR_ID
-       , B.CATEGORY
-ORDER BY B.AUTHOR_ID
-       , B.CATEGORY DESC;
+SELECT b.author_id
+     , a.author_name
+     , b.category
+     , SUM(s.sales * b.price) AS sales
+FROM book AS b
+JOIN author AS a ON b.author_id = a.author_id
+JOIN book_sales AS s ON b.book_id = s.book_id
+WHERE DATE_FORMAT(s.sales_date, '%Y-%m') = '2022-01'
+GROUP BY b.author_id
+       , b.category
+ORDER BY b.author_id
+       , b.category DESC;
