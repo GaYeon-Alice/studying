@@ -1,28 +1,18 @@
 -- 코드를 입력하세요
-SELECT
-    MONTH(START_DATE) AS MONTH,
-    CAR_ID,
-    COUNT(*) AS RECORDS
-FROM
-    CAR_RENTAL_COMPANY_RENTAL_HISTORY
-WHERE
-    START_DATE BETWEEN '2022-08-01' AND '2022-10-31'
-    AND CAR_ID IN (
-        -- 대여 시작일을 기준으로 2022년 8월부터 10월까지 총 대여 횟수가 5회 이상인 자동차 필터링
-        SELECT
-            CAR_ID
-        FROM
-            CAR_RENTAL_COMPANY_RENTAL_HISTORY
-        WHERE
-            START_DATE BETWEEN '2022-08-01' AND '2022-10-31'
-        GROUP BY
-            CAR_ID
-        HAVING
-            COUNT(*) >= 5
-    )
-GROUP BY
-    MONTH,
-    CAR_ID
-ORDER BY
-    MONTH,
-    CAR_ID DESC;
+WITH FilteredCars AS (
+    SELECT car_id
+    FROM car_rental_company_rental_history
+    WHERE start_date BETWEEN '2022-08-01' AND '2022-10-31'
+    GROUP BY car_id
+    HAVING COUNT(*) >= 5
+)
+SELECT MONTH(start_date) AS month
+     , car_id
+     , COUNT(*) AS records
+FROM car_rental_company_rental_history
+WHERE start_date BETWEEN '2022-08-01' AND '2022-10-31'
+  AND car_id IN (SELECT car_id FROM FilteredCars)
+GROUP BY month
+       , car_id
+ORDER BY month
+       , car_id DESC;
