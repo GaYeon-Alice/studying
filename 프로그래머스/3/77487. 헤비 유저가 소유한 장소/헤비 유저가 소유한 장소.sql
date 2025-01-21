@@ -1,10 +1,10 @@
 -- 코드를 입력하세요
 SELECT *
-FROM PLACES
-WHERE HOST_ID IN (
-    SELECT HOST_ID
-    FROM PLACES
-    GROUP BY HOST_ID
-    HAVING COUNT(HOST_ID) >= 2  -- 헤비 유저만 필터링
+FROM places
+WHERE host_id IN (
+    SELECT host_id
+    FROM places
+    GROUP BY host_id
+    HAVING COUNT(DISTINCT id) >= 2
 )
-ORDER BY ID;
+ORDER BY id;
