@@ -1,10 +1,7 @@
 -- 코드를 작성해주세요
-SELECT
-    ID
-    , LENGTH
-FROM
-    FISH_INFO
-ORDER BY
-    LENGTH DESC
-    , ID
+SELECT id
+     , length
+FROM fish_info
+ORDER BY length DESC
+       , id
 LIMIT 10;
