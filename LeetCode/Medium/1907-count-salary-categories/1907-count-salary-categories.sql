@@ -6,13 +6,17 @@ WITH c AS (
     UNION
     SELECT 'High Salary' AS category
 )
-SELECT c.category
-     , COALESCE(COUNT(a.account_id), 0) AS accounts_count
+SELECT 
+    c.category,
+    COALESCE(accounts_count, 0) AS accounts_count
 FROM c
-LEFT JOIN Accounts AS a
-ON ( 
-    (c.category = 'Low Salary' AND a.income < 20000)
-    OR (c.category = 'Average Salary' AND a.income BETWEEN 20000 AND 50000)
-    OR (c.category = 'High Salary' AND a.income > 50000)
-)
-GROUP BY c.category;
+LEFT JOIN (
+    SELECT CASE
+                WHEN income < 20000 THEN 'Low Salary'
+                WHEN income BETWEEN 20000 AND 50000 THEN 'Average Salary'
+                WHEN income > 50000 THEN 'High Salary'
+           END AS category
+         , COUNT(*) AS accounts_count
+    FROM Accounts
+    GROUP BY category
+) AS cnt ON c.category = cnt.category
