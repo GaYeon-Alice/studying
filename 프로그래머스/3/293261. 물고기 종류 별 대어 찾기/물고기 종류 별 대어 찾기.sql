@@ -1,23 +1,13 @@
 -- 코드를 작성해주세요
-SELECT
-    FI.ID
-    , FNI.FISH_NAME
-    , FI.LENGTH
-FROM
-    FISH_INFO AS FI
-JOIN
-    FISH_NAME_INFO AS FNI
-ON
-    FI.FISH_TYPE = FNI.FISH_TYPE
-WHERE
-    (FI.FISH_TYPE, FI.LENGTH) IN (
-        SELECT
-            FISH_TYPE
-            , MAX(LENGTH)
-        FROM
-            FISH_INFO
-        GROUP BY
-            FISH_TYPE
-    )  -- 물고기 종류별 가장 큰 물고기의 길이 조회
-ORDER BY
-    ID;
+SELECT i.id
+     , n.fish_name
+     , i.length
+FROM fish_info AS i
+    JOIN fish_name_info AS n ON i.fish_type = n.fish_type
+WHERE (i.fish_type, i.length) IN (
+    SELECT fish_type
+         , MAX(length)
+    FROM fish_info
+    GROUP BY fish_type
+)
+ORDER BY i.id;
