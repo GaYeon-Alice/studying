@@ -1,4 +1,5 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 SELECT score
-     , DENSE_RANK() OVER (ORDER BY score DESC) AS 'rank'
-FROM Scores;
+     , DENSE_RANK() OVER (ORDER BY score DESC) AS rank
+FROM Scores
+ORDER BY rank;
