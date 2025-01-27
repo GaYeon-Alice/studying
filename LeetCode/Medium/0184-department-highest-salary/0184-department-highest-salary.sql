@@ -1,10 +1,14 @@
-# Write your MySQL query statement below
-SELECT d.name AS Department
-     , e.name AS Employee
-     , e.salary AS Salary
-FROM Employee AS e
-JOIN Department AS d ON e.departmentId = d.id
-WHERE (e.departmentId, e.salary) IN (SELECT departmentId 
-                                          , MAX(salary)
-                                     FROM Employee
-                                     GROUP BY departmentId)
+-- Write your PostgreSQL query statement below
+WITH SalaryRank AS (
+    SELECT name
+         , salary
+         , departmentId
+         , DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS dr
+    FROM Employee
+)
+SELECT d.name AS "Department"
+     , r.name AS "Employee"
+     , r.salary AS "Salary"
+FROM SalaryRank AS r
+     JOIN Department AS d ON r.departmentId = d.id
+WHERE r.dr = 1;
