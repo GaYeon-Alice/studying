@@ -1,14 +1,14 @@
-# Write your MySQL query statement below
-WITH TopThree AS (
-    SELECT d.name AS Department
-         , e.name AS Employee
-         , e.salary AS Salary
-         , DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS SalaryRank  -- 부서별 급여 순위
-    FROM Employee AS e
-    LEFT JOIN Department AS d ON e.departmentId = d.id
+-- Write your PostgreSQL query statement below
+WITH salary_rank AS (
+    SELECT name
+         , salary
+         , departmentId
+         , DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS dr
+    FROM employee
 )
-SELECT Department
-     , Employee
-     , Salary
-FROM TopThree
-WHERE SalaryRank <= 3;  -- 각 부서별로 급여가 상위 3개인 직원만 추출
+SELECT d.name AS "Department"
+     , r.name AS "Employee"
+     , r.salary AS "Salary"
+FROM salary_rank AS r
+     JOIN department AS d ON r.departmentId = d.id
+WHERE r.dr <= 3 
