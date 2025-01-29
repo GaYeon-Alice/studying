@@ -1,24 +1,14 @@
 -- 코드를 작성해주세요
--- 분화된 연도별 가장 큰 대장균의 크기를 조회한 테이블 생성
-WITH MAX_COLONY AS (
-    SELECT
-        YEAR(DIFFERENTIATION_DATE) AS YEAR
-        , MAX(SIZE_OF_COLONY) AS MAX_SIZE
-    FROM
-        ECOLI_DATA
-    GROUP BY
-        YEAR
+WITH yearly_largest_colony AS (
+    SELECT YEAR(differentiation_date) AS year
+         , MAX(size_of_colony) AS largest_colony
+    FROM ecoli_data
+    GROUP BY year
 )
-SELECT
-    YEAR(E.DIFFERENTIATION_DATE) AS YEAR
-    , (M.MAX_SIZE - E.SIZE_OF_COLONY) AS YEAR_DEV
-    , E.ID
-FROM
-    ECOLI_DATA AS E
-JOIN
-    MAX_COLONY AS M
-ON
-    YEAR(E.DIFFERENTIATION_DATE) = M.YEAR
-ORDER BY
-    YEAR
-    , YEAR_DEV;
+SELECT YEAR(differentiation_date) AS year
+     , m.largest_colony - e.size_of_colony AS year_dev
+     , e.id
+FROM ecoli_data AS e
+     JOIN yearly_largest_colony AS m ON YEAR(e.differentiation_date) = m.year
+ORDER BY year
+       , year_dev;
