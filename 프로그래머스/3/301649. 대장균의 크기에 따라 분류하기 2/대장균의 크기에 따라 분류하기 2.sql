@@ -1,13 +1,10 @@
-# -- 코드를 작성해주세요
-SELECT
-    ID
-    , CASE
-          WHEN NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) = 1 THEN 'CRITICAL'
-          WHEN NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) = 2 THEN 'HIGH'
-          WHEN NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) = 3 THEN 'MEDIUM'
-          ELSE 'LOW'
-      END AS COLONY_NAME
-FROM
-    ECOLI_DATA
-ORDER BY
-    ID;
+-- 코드를 작성해주세요
+SELECT id
+     , CASE
+            WHEN NTILE(4) OVER (ORDER BY size_of_colony DESC) = 1 THEN 'CRITICAL'
+            WHEN NTILE(4) OVER (ORDER BY size_of_colony DESC) = 2 THEN 'HIGH'
+            WHEN NTILE(4) OVER (ORDER BY size_of_colony DESC) = 3 THEN 'MEDIUM'
+            ELSE 'LOW'
+       END AS colony_name
+FROM ecoli_data
+ORDER BY id;
