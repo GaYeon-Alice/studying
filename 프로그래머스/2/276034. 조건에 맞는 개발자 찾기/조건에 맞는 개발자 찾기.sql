@@ -1,7 +1,9 @@
 -- 코드를 작성해주세요
-SELECT DISTINCT(ID), EMAIL, FIRST_NAME, LAST_NAME
-FROM DEVELOPERS AS D
-JOIN SKILLCODES AS S
-ON D.SKILL_CODE & S.CODE
-WHERE S.NAME IN ('Python', 'C#')
-ORDER BY ID
+SELECT DISTINCT d.id
+              , d.email
+              , d.first_name
+              , d.last_name
+FROM developers AS d
+     JOIN skillcodes AS s ON d.skill_code & s.code
+WHERE s.name IN ('Python', 'C#')
+ORDER BY d.id;
