@@ -1,5 +1,5 @@
 # Write your MySQL query statement below
-SELECT nd.id
-FROM Weather AS td
-JOIN Weather AS nd ON DATE_ADD(td.recordDate, INTERVAL +1 DAY) = nd.recordDate
-WHERE td.temperature < nd.temperature;
+SELECT nw.id
+FROM Weather AS tw
+JOIN Weather AS nw ON DATE_ADD(tw.recordDate, INTERVAL +1 DAY) = nw.recordDate
+WHERE tw.temperature < nw.temperature;
