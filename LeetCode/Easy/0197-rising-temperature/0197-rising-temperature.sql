@@ -1,5 +1,5 @@
-# Write your MySQL query statement below
-SELECT nw.id
-FROM Weather AS tw
-JOIN Weather AS nw ON DATE_ADD(tw.recordDate, INTERVAL +1 DAY) = nw.recordDate
-WHERE tw.temperature < nw.temperature;
+-- Write your PostgreSQL query statement below
+SELECT n.id
+FROM Weather AS t
+     JOIN Weather AS n ON t.recordDate + INTERVAL '+1 DAY' = n.recordDate
+WHERE n.temperature > t.temperature
