@@ -1,6 +1,10 @@
-# Write your MySQL query statement below
-SELECT e.name
-FROM Employee AS m
-JOIN Employee AS e ON m.managerId = e.id
-GROUP BY m.managerId
-HAVING COUNT(*) >= 5;  -- 5명 이상의 직원을 관리하는 관리자만 조회
+-- Write your PostgreSQL query statement below
+WITH Manager AS (
+    SELECT managerId AS id
+    FROM Employee
+    GROUP BY managerId
+    HAVING COUNT(*) >= 5
+)
+SELECT name
+FROM Employee AS e
+     JOIN Manager AS m USING (id)
