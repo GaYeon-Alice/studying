@@ -1,16 +1,21 @@
 -- 코드를 입력하세요
-SELECT R.HISTORY_ID
-     , FLOOR(C.DAILY_FEE * (1 - 0.01 * COALESCE(D.DISCOUNT_RATE, 0))
-       * (DATEDIFF(R.END_DATE, R.START_DATE) + 1)) AS FEE  -- 할인율이 적용된 대여 금액 계산
-FROM CAR_RENTAL_COMPANY_CAR AS C 
-JOIN CAR_RENTAL_COMPANY_RENTAL_HISTORY AS R ON C.CAR_ID = R.CAR_ID
-LEFT JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN AS D
-    ON C.CAR_TYPE = D.CAR_TYPE
+WITH RENTAL_INFO AS (
+    SELECT h.history_id
+         , c.daily_fee
+         , c.car_type
+         , DATEDIFF(h.end_date, h.start_date) + 1 AS rental_days
+    FROM CAR_RENTAL_COMPANY_CAR AS c
+    JOIN CAR_RENTAL_COMPANY_RENTAL_HISTORY AS h ON c.car_id = h.car_id
+    WHERE c.car_type = '트럭'
+)
+SELECT r.history_id
+     , FLOOR(r.daily_fee * (1 - 0.01 * COALESCE(d.discount_rate, 0)) * r.rental_days) AS fee
+FROM RENTAL_INFO AS r
+LEFT JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN AS d
+    ON r.car_type = d.car_type
     AND (
-        (D.DURATION_TYPE = '7일 이상' AND DATEDIFF(R.END_DATE, R.START_DATE) + 1 BETWEEN 7 AND 29)
-        OR (D.DURATION_TYPE = '30일 이상' AND DATEDIFF(R.END_DATE, R.START_DATE) + 1 BETWEEN 30 AND 89)
-        OR (D.DURATION_TYPE = '90일 이상' AND DATEDIFF(R.END_DATE, R.START_DATE) + 1 >= 90)
-    )  -- 대여 기간에 따른 할인율
-WHERE C.CAR_TYPE = '트럭'
-ORDER BY FEE DESC
-       , R.HISTORY_ID DESC;
+        (d.duration_type = '7일 이상' AND r.rental_days BETWEEN 7 AND 29)
+        OR (d.duration_type = '30일 이상' AND r.rental_days BETWEEN 30 AND 89)
+        OR (d.duration_type = '90일 이상' AND r.rental_days >= 90)
+    ) 
+ORDER BY fee DESC, r.history_id DESC;
