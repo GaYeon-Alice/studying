@@ -1,12 +1,10 @@
-# Write your MySQL query statement below
-WITH TotalWeight AS (
-    SELECT person_name
-         , SUM(weight) OVER (ORDER BY turn ROWS UNBOUNDED PRECEDING) AS total_weight  -- 몸무게 누적 합
-    FROM Queue
-    ORDER BY turn
-)
+-- Write your PostgreSQL query statement below
 SELECT person_name
-FROM TotalWeight
-WHERE total_weight <= 1000
-ORDER BY total_weight DESC
-LIMIT 1;
+FROM (
+    SELECT person_name
+         , SUM(weight) OVER (ORDER BY turn) AS total_weight
+    FROM Queue
+) AS tw
+WHERE tw.total_weight <= 1000
+ORDER BY tw.total_weight DESC
+LIMIT 1
