@@ -1,5 +1,5 @@
-# Write your MySQL query statement below
-WITH Relation AS (  -- 모든 사용자 간 양방향 관계
+-- Write your PostgreSQL query statement below
+WITH Friends AS (
     SELECT requester_id
          , accepter_id
     FROM RequestAccepted
@@ -7,13 +7,13 @@ WITH Relation AS (  -- 모든 사용자 간 양방향 관계
     SELECT accepter_id
          , requester_id
     FROM RequestAccepted
-), FriendCounts AS (  -- 각 사용자별 친구 수
-    SELECT requester_id
-         , COUNT(accepter_id) AS num
-    FROM Relation
-    GROUP BY requester_id
+), Counts AS (
+    SELECT requester_id AS id
+         , COUNT(*) AS num
+    FROM Friends
+    GROUP BY id
 )
-SELECT requester_id AS id
+SELECT id
      , num
-FROM FriendCounts
-WHERE num = (SELECT MAX(num) FROM FriendCounts);
+FROM Counts
+WHERE num = (SELECT MAX(num) FROM Counts)
