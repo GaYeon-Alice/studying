@@ -2,7 +2,7 @@
 SELECT MAX(salary) AS "SecondHighestSalary"
 FROM (
     SELECT salary
-         , DENSE_RANK() OVER (ORDER BY salary) AS dr
+         , DENSE_RANK() OVER (ORDER BY salary DESC) AS dr
     FROM Employee
 ) AS rk
 WHERE rk.dr = 2
