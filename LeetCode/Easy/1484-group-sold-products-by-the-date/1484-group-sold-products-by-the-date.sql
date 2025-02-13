@@ -1,6 +1,6 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 SELECT sell_date
      , COUNT(DISTINCT product) AS num_sold
-     , GROUP_CONCAT(DISTINCT product ORDER BY product SEPARATOR ',') AS products
+     , STRING_AGG(DISTINCT product, ',' ORDER BY product) AS products
 FROM Activities
-GROUP BY sell_date;
+GROUP BY sell_date
