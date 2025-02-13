@@ -1,8 +1,9 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 SELECT p.product_name
      , SUM(o.unit) AS unit
 FROM Orders AS o
-LEFT JOIN Products AS p ON o.product_id = p.product_id
-WHERE DATE_FORMAT(o.order_date, '%Y-%m') = '2020-02'
+     JOIN Products AS p USING (product_id)
+WHERE TO_CHAR(o.order_date, 'YYYY-MM') = '2020-02'
 GROUP BY o.product_id
+       , p.product_name
 HAVING SUM(o.unit) >= 100
