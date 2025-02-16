@@ -1,16 +1,15 @@
 -- 코드를 입력하세요
-WITH JoinedUsers2021 AS (  -- 2021년에 가입한 전체 회원
-    SELECT USER_ID
-    FROM USER_INFO
-    WHERE YEAR(JOINED) = 2021
+WITH users AS (
+    SELECT user_id
+    FROM user_info
+    WHERE YEAR(joined) = 2021
 )
-SELECT YEAR(OS.SALES_DATE) AS YEAR
-     , MONTH(OS.SALES_DATE) AS MONTH
-     , COUNT(DISTINCT OS.USER_ID) AS PURCHASED_USERS
-     , ROUND(COUNT(DISTINCT OS.USER_ID) / (SELECT COUNT(*) FROM JoinedUsers2021), 1) AS PURCHASED_RATIO
-FROM JoinedUsers2021 AS JU
-JOIN ONLINE_SALE AS OS ON JU.USER_ID = OS.USER_ID
-GROUP BY YEAR
-       , MONTH
-ORDER BY YEAR
-       , MONTH;
+SELECT YEAR(s.sales_date) AS year
+     , MONTH(s.sales_date) AS month
+     , COUNT(DISTINCT s.user_id) AS purchased_users
+     , ROUND(COUNT(DISTINCT s.user_id) / (SELECT COUNT(*) FROM users), 1) AS purchased_ratio
+FROM users AS u
+JOIN online_sale AS s
+  ON u.user_id = s.user_id
+GROUP BY YEAR(s.sales_date), MONTH(s.sales_date)
+ORDER BY year, month;
