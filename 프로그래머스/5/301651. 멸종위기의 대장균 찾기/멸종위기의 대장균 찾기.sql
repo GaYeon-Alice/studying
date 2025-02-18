@@ -1,24 +1,26 @@
 # -- 코드를 작성해주세요
-WITH RECURSIVE GENERATION AS (
+WITH RECURSIVE generation AS (
     -- 1세대 대장균을 선택
-    SELECT ID
-         , PARENT_ID
-         , 1 AS GENERATION
-    FROM ECOLI_DATA
-    WHERE PARENT_ID IS NULL
+    SELECT id
+         , parent_id
+         , 1 AS generation
+    FROM ecoli_data
+    WHERE parent_id IS NULL
     UNION ALL
     -- 세대 구분
-    SELECT E.ID
-         , E.PARENT_ID
-         , G.GENERATION + 1
-    FROM ECOLI_DATA AS E
-    INNER JOIN GENERATION AS G ON E.PARENT_ID = G.ID
+    SELECT e.id
+         , e.parent_id
+         , g.generation + 1
+    FROM ecoli_data AS e
+    JOIN generation AS g
+      ON e.parent_id = g.id
 )
 -- 세대별 자식이 없는 대장균 개체의 수를 계산
-SELECT COUNT(*) AS COUNT
-     , G.GENERATION AS GENERATION
-FROM GENERATION AS G
-LEFT JOIN ECOLI_DATA AS E ON G.ID = E.PARENT_ID
-WHERE E.PARENT_ID IS NULL
-GROUP BY GENERATION
-ORDER BY GENERATION;
+SELECT COUNT(*) AS count
+     , g.generation AS generation
+FROM generation AS g
+LEFT JOIN ecoli_data AS e
+  ON g.id = e.parent_id
+WHERE e.parent_id IS NULL
+GROUP BY generation
+ORDER BY generation;
