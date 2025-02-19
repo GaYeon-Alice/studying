@@ -1,11 +1,8 @@
 -- 코드를 입력하세요
-SELECT WAREHOUSE_ID
-     , WAREHOUSE_NAME
-     , ADDRESS
-     , CASE
-           WHEN FREEZER_YN IS NULL THEN 'N'
-           ELSE FREEZER_YN
-       END AS FREEZER_YN
-FROM FOOD_WAREHOUSE
-WHERE ADDRESS LIKE '경기도%'
-ORDER BY WAREHOUSE_ID;
+SELECT warehouse_id
+     , warehouse_name
+     , address
+     , COALESCE(freezer_yn, 'N') AS freezer_yn
+FROM food_warehouse
+WHERE address LIKE '경기도%'
+ORDER BY warehouse_id;
