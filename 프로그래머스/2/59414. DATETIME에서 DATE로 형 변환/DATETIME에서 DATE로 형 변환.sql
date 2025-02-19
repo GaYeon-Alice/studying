@@ -1,6 +1,6 @@
 -- 코드를 입력하세요
-SELECT ANIMAL_ID
-     , NAME
-     , DATE_FORMAT(DATETIME, '%Y-%m-%d') AS DATE
-FROM ANIMAL_INS
-ORDER BY ANIMAL_ID;
+SELECT animal_id
+     , name
+     , DATE_FORMAT(datetime, '%Y-%m-%d') AS datetime
+FROM animal_ins
+ORDER BY animal_id;
