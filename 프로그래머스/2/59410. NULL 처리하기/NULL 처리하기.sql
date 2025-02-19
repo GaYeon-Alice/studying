@@ -1,9 +1,6 @@
 -- 코드를 입력하세요
-SELECT ANIMAL_TYPE
-     , CASE
-           WHEN NAME IS NULL THEN 'No name'  -- 이름이 없는 동물의 이름은 'No name'으로 표시
-           ELSE NAME
-       END AS NAME
-     , SEX_UPON_INTAKE
-FROM ANIMAL_INS
-ORDER BY ANIMAL_ID;
+SELECT animal_type
+     , COALESCE(name, 'No name') AS name
+     , sex_upon_intake
+FROM animal_ins
+ORDER BY animal_id;
