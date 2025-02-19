@@ -1,7 +1,7 @@
 -- 코드를 입력하세요
-SELECT ANIMAL_ID
-     , NAME
-FROM ANIMAL_INS
-WHERE NAME LIKE '%el%'
-  AND ANIMAL_TYPE = 'Dog'
-ORDER BY NAME;
+SELECT animal_id
+     , name
+FROM animal_ins
+WHERE animal_type = 'Dog'
+  AND name LIKE '%EL%'
+ORDER BY name;
