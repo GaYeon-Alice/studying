@@ -4,5 +4,5 @@ SELECT COUNT(*) AS fish_count
      , fish_type
 FROM fish_info
 GROUP BY fish_type
-HAVING AVG(IFNULL(length, 10)) >= 33  -- 10cm 이하의 물고기들은 10cm로 취급
+HAVING AVG(COALESCE(length, 10)) >= 33
 ORDER BY fish_type;
