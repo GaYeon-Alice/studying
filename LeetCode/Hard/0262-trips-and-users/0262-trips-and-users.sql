@@ -1,16 +1,17 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 WITH UnbannedUsers AS (
-    SELECT *
-    FROM Trips AS t
-    WHERE client_id IN (SELECT users_id
-                        FROM Users
-                        WHERE banned = 'No' AND role = 'client')
-      AND driver_id IN (SELECT users_id
-                        FROM Users
-                        WHERE banned = 'No' AND role = 'driver')
+    SELECT users_id
+    FROM users
+    WHERE banned = 'No'
 )
-SELECT request_at AS Day
-     , ROUND(SUM(CASE WHEN status LIKE 'cancelled%' THEN 1 ELSE 0 END) / COUNT(*), 2) AS 'Cancellation Rate'
-FROM UnbannedUsers
-WHERE request_at BETWEEN '2013-10-01' AND '2013-10-03'
-GROUP BY request_at;
+SELECT request_at AS day
+     , ROUND(COUNT(CASE WHEN status LIKE 'cancelled%' THEN id END) * 1.0 / COUNT(*), 2) AS "cancellation rate"
+FROM trips
+WHERE client_id IN (
+    SELECT users_id
+    FROM UnbannedUsers
+) AND driver_id IN (
+    SELECT users_id
+    FROM UnbannedUsers
+)
+GROUP BY day
