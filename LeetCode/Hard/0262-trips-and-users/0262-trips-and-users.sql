@@ -15,4 +15,4 @@ WHERE client_id IN (
     FROM UnbannedUsers
 ) AND request_at BETWEEN '2013-10-01' AND '2013-10-03'
 GROUP BY day
-HAVING COUNT(*) > 0
+HAVING COUNT(*) > 0;
