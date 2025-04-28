@@ -4,13 +4,11 @@ WITH converted AS (
     FROM useractivity
     WHERE activity_type = 'paid'
 )
-SELECT user_id
-     , ROUND(AVG(CASE WHEN activity_type = 'free_trial' THEN activity_duration END), 2) AS trial_avg_duration
-     , ROUND(AVG(CASE WHEN activity_type = 'paid' THEN activity_duration END), 2) AS paid_avg_duration
-FROM useractivity
-WHERE user_id IN (
-    SELECT user_id
-    FROM converted
-)
+SELECT ua.user_id
+     , ROUND(AVG(CASE WHEN ua.activity_type = 'free_trial' THEN ua.activity_duration END), 2) AS trial_avg_duration
+     , ROUND(AVG(CASE WHEN ua.activity_type = 'paid' THEN ua.activity_duration END), 2) AS paid_avg_duration
+FROM useractivity AS ua
+JOIN converted AS c
+    ON ua.user_id = c.user_id
 GROUP BY user_id
 ORDER BY user_id;
