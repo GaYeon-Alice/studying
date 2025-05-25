@@ -1,4 +1,4 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 WITH PurchaseInfo AS (
     SELECT p.user_id
          , p.product_id
@@ -15,5 +15,5 @@ JOIN PurchaseInfo AS pi2
     ON pi1.category < pi2.category
     AND pi1.user_id = pi2.user_id
 GROUP BY category1, category2
-HAVING customer_count >= 3
+HAVING COUNT(DISTINCT pi1.user_id) >= 3
 ORDER BY customer_count DESC, category1, category2;
