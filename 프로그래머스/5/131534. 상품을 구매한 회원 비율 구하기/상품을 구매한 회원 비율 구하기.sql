@@ -11,5 +11,5 @@ SELECT YEAR(s.sales_date) AS year
 FROM users AS u
 JOIN online_sale AS s
   ON u.user_id = s.user_id
-GROUP BY YEAR(s.sales_date), MONTH(s.sales_date)
+GROUP BY YEAR(sales_date), MONTH(sales_date)
 ORDER BY year, month;
