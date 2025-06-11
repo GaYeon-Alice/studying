@@ -11,4 +11,4 @@ SELECT DISTINCT d.id
 FROM developers AS d
 JOIN frontend AS f
   ON d.skill_code & f.code
-ORDER BY d.id;
+ORDER BY id;
